@@ -21,12 +21,18 @@ public class NewBehaviourScript : MonoBehaviour {
 
     IEnumerator AnimDelay()
     {
-        yield return new WaitForSeconds(Random.Range(0.5f, 5.0f));
-        GetComponent<Animator>().SetBool("isCanSwitchAnimToScale", true);
-        GetComponent<Animator>().SetBool("isCanSwitchAnimToMove", false);
-        yield return new WaitForSeconds(Random.Range(0.5f, 5.0f));
-        GetComponent<Animator>().SetBool("isCanSwitchAnimToMove", true);
-        GetComponent<Animator>().SetBool("isCanSwitchAnimToScale", false);
-        canSwitchAnim = true; 
+        if (GetComponent<Animator>().GetInteger("changeAnim") < 3)
+        {
+            yield return new WaitForSeconds(Random.Range(0.5f, 5.0f));
+            GetComponent<Animator>().SetInteger("changeAnim", GetComponent<Animator>().GetInteger("changeAnim") + 1);
+            Debug.Log(GetComponent<Animator>().GetInteger("changeAnim"));
+            canSwitchAnim = true;
+
+        }
+        else
+        {
+            GetComponent<Animator>().SetInteger("changeAnim", 0);
+            canSwitchAnim = true;
+        }
     }
 }
